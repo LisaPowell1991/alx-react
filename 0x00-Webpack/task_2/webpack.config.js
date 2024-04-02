@@ -10,6 +10,7 @@ module.exports = {
         filename: 'bundle.js',
     },
     performance: {
+        hints: false,
         maxAssetSize: 1000000,
         maxEntrypointSize: 1000000,
     },
