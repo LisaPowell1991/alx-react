@@ -11,29 +11,20 @@ module.exports = {
     },
     performance: {
         hints: false,
-        maxAssetSize: 1000000,
-        maxEntrypointSize: 1000000,
     },
     module: {
         rules: [
             {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            bypassOnDebug: true,
-                            disable: true,
-                        },
-                    },
-                ],
+                generator: {
+                    filename: 'assets/images/[hash][ext][query]',
+                },
             },
-        ]
-    }
+        ],
+    },
 };

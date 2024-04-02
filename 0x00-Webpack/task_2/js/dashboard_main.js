@@ -2,7 +2,7 @@ import '../css/main.css';
 import $ from 'jquery';
 import _ from 'lodash';
 
-$("<div id='logo'> </div>").appendTo('body');
+$('body').prepend('<div id="logo"></div>');
 $("<p>Holberton Dashboard</p>").appendTo('body');
 $("<p>Dashboard data for the students</p>").appendTo('body');
 $("<button>Click here to get started</button>").appendTo('body');
