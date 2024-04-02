@@ -10,21 +10,30 @@ module.exports = {
         filename: 'bundle.js',
     },
     performance: {
-        hints: false,
+        maxAssetSize: 1000000,
+        maxEntrypointSize: 1000000,
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'assets/images/[hash][ext][query]',
+                    filename: 'assets/[name][hash][ext]'
                 },
             },
         ],
-    },
+    }
 };
