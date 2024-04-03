@@ -26,6 +26,11 @@ module.exports = {
         },
         shared: 'jquery',
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+    },
     output: {
         path: path.resolve(__dirname, 'public'),
         filename: '[name].bundle.js',
@@ -35,10 +40,8 @@ module.exports = {
             directory: path.join(__dirname, 'public'),
         },
         port: 8564,
-        open: true,
-        hot: true,
-        liveReload: true,
     },
+
     performance: {
         hints: false,
         maxAssetSize: 1000000,
