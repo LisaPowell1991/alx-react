@@ -34,8 +34,12 @@
 
 }
 
-#root-notifications {
-  margin-top: 10rem;
+button {
+  margin-left: 1rem;
+}
+
+label {
+  margin: 1rem;
 }
 
 

@@ -6,14 +6,15 @@ import { getLatestNotification } from './utils';
 function Notifications() {
     return (
         <div className='Notifications'>
-            <p>Here is the list of notifications</p>
             <button
-                style={{ display: 'inline', position: 'absolute', right: '1rem', top: '1rem', background: 'white', border: 'none', cursor: 'pointer' }}
-                aria-label='Close'
-                onClick={() => console.log('Close button has been clicked')}
+                style={{ color: "#3a3a3a", fontWeight: "bold", background: "none", border: "none", fontSize: "15px", float: "right", cursor: "pointer" }}
+                aria-label="Close"
+                onClick={() => console.log("Close button has been clicked")}
             >
-                <img src={closeIcon} alt="Close" style={{ width: '10px', height: '10px' }} />
+                <img src={closeIcon} alt="Close" style={{ width: '20px', height: '20px' }} />
             </button>
+            <div style={{ clear: 'both' }}></div>
+            <p>Here is the list of notifications</p>
             <ul>
                 <li data='default'>New course available</li>
                 <li data='urgent'>New resume available</li>
