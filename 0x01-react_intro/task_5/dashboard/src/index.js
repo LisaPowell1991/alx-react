@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom';
-import App from './App';
-import Notifications from './Notifications';
+import App from '../App/App';
+import Notifications from '../Notifications/Notifications';
 import reportWebVitals from './reportWebVitals';
 
 createRoot(document.getElementById('root')).render(
