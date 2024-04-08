@@ -1,0 +1,35 @@
+.Notifications {
+    border: 3px dashed #E0354B;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    font-weight: bold;
+}
+
+/* li[data-priority="default"] {
+    color: blue !important;
+}
+
+li[data-priority="urgent"] {
+    color: red !important;
+} */
+
+[data-notification-type="default"] {
+    color: blue;
+}
+
+[data-urgent],
+[data-notification-type="urgent"] {
+    color: red;
+}
+
+button {
+    margin-left: 1rem;
+}
+
+label {
+    margin: 1rem;
+}
