@@ -1,0 +1,35 @@
+.Notifications {
+    border: 3px dashed #E0354B;
+    padding: 1rem;
+    font-size: 1.25rem;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 38%;
+    float: right;
+}
+
+p {
+    font-weight: bold;
+}
+
+[data-notification-type="default"] {
+    color: blue;
+}
+
+[data-urgent],
+[data-notification-type="urgent"] {
+    color: red;
+}
+
+button {
+    margin-left: 1rem;
+}
+
+label {
+    margin: 1rem;
+}
+
+.menuItem {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.5rem;
+}
