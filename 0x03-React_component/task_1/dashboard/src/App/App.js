@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import Header from '../Header/Header';
@@ -7,9 +7,8 @@ import Footer from '../Footer/Footer';
 import Notification from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 
-class App extends React.Component {
+class App extends Component {
   render() {
-    // Destructure isLoggedIn from this.props
     const { isLoggedIn } = this.props;
 
     const listCourses = [
