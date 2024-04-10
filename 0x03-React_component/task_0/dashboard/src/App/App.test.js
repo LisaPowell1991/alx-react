@@ -49,3 +49,27 @@ describe("Testing <App isLoggedIn={true} />", () => {
         expect(wrapper.find('CourseList').exists());
     });
 });
+
+describe('Test keydown event', () => {
+    let mockAlert;
+
+    beforeEach(() => {
+        mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => { });
+    });
+
+    afterEach(() => {
+        mockAlert.mockRestore();
+    });
+
+    it('calls logOut and alert when "Control" and "h" keys are pressed', () => {
+        const mockLogOut = jest.fn();
+        const wrapper = shallow(<App logOut={mockLogOut} />);
+        const event = {
+            ctrlKey: true,
+            key: 'h'
+        };
+        wrapper.instance().handleKeyDown(event);
+        expect(mockLogOut).toHaveBeenCalled();
+        expect(mockAlert).toHaveBeenCalledWith('Logging you out');
+    });
+});
