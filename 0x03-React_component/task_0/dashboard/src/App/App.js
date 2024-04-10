@@ -7,10 +7,13 @@ import Footer from '../Footer/Footer';
 import Notification from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 
+// Convert App from a function to a class that extends React.Component
 class App extends React.Component {
+  // The constructor is where you initialize state and bind methods
   constructor(props) {
     super(props);
 
+    // If you had state or needed to bind methods, you'd do that here
     this.state = {
       listCourses: [
         { id: 1, name: 'ES6', credit: 60 },
@@ -26,12 +29,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
-    const { listCourses, listNotifications } = this.state;
-
-    const updatedListNotifications = listNotifications.map((notification) => ({
+    // Updated to use state instead of the original constants
+    const updatedListNotifications = this.state.listNotifications.map((notification) => ({
       ...notification,
-      id: notification.id + listNotifications.length
+      id: notification.id + this.state.listNotifications.length
     }));
 
     return (
@@ -40,7 +41,7 @@ class App extends React.Component {
         <div className="App">
           <Header />
           <div className="App-body">
-            {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+            {this.props.isLoggedIn ? <CourseList listCourses={this.state.listCourses} /> : <Login />}
           </div>
           <Footer />
         </div>
