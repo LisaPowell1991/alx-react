@@ -5,7 +5,7 @@ import closeIcon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropeTypes from 'prop-types';
 
-function Notifications({ displayDrawer }) {
+function Notifications({ displayDrawer, listNotifications = [] }) {
     return (
         <>
             <div className='header-container'>

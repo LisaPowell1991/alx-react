@@ -1,5 +1,5 @@
 import React from 'react';
-import PropType from 'prop-types';
+import PropTypes from 'prop-types';
 import CourseShape from './CourseShape';
 import CourseListRow from './CourseListRow';
 import './CourseList.css';
@@ -13,7 +13,7 @@ function CourseList({ listCourses }) {
             </thead>
             <tbody>
                 {
-                    listCourses.length == 0 ?
+                    listCourses.length === 0 ?
                         <CourseListRow isHeader={false} textFirstCell='No course available yet' />
                         : null
                 }
@@ -31,8 +31,8 @@ CourseList.defaultProps = {
     listCourses: []
 };
 
-CourseList.propType = {
-    listCourses: PropType.arrayOf(CourseShape)
+CourseList.propTypes = {
+    listCourses: PropTypes.arrayOf(CourseShape)
 };
 
 export default CourseList;
