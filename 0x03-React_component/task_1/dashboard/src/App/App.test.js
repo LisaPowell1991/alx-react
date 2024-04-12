@@ -1,5 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { jest } from '@jest/globals';
 import App from './App';
 
 describe('Test App.js', () => {
@@ -47,5 +52,22 @@ describe("Testing <App isLoggedIn={true} />", () => {
 
     it(" the CourseList component is included", () => {
         expect(wrapper.find('CourseList').exists());
+    });
+});
+
+describe("Ctrl + H Keydown Event", () => {
+    it("calls logOut function and shows 'Logging you out' alert", () => {
+        const logOutMock = jest.fn();
+        const alertSpy = jest.spyOn(window, "alert");
+        const wrapper = mount(<App logOut={logOutMock} />);
+
+        const event = new KeyboardEvent("keydown", { ctrlKey: true, key: "h" });
+        document.dispatchEvent(event);
+
+        expect(logOutMock).toHaveBeenCalledTimes(1);
+        expect(alertSpy).toHaveBeenCalledWith("Logging you out");
+
+        alertSpy.mockRestore();
+        wrapper.unmount();
     });
 });
