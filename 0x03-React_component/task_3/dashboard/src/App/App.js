@@ -6,7 +6,8 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import Notification from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
-
+import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
+import BodySection from "../BodySection/BodySection";
 class App extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
@@ -49,7 +50,18 @@ class App extends Component {
         <div className="App">
           <Header />
           <div className="App-body">
-            {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+            {isLoggedIn ? (
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList listCourses={listCourses} />
+              </BodySectionWithMarginBottom>
+            ) : (
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login />
+              </BodySectionWithMarginBottom>
+            )}
+            <BodySection title="News from the School">
+              <p>Some random text</p>
+            </BodySection>
           </div>
           <Footer />
         </div>
