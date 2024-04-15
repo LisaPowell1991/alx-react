@@ -1,6 +1,7 @@
 import React from 'react';
 import CourseListRow from './CourseListRow';
 import { shallow } from 'enzyme';
+import { rowStyle, headerRowStyle } from './CourseListRow';
 
 describe('Course List Row component test', () => {
 	it('should render without crashing', () => {
@@ -36,5 +37,15 @@ describe('Course List Row component test', () => {
 		expect(wrapper.find('tr').children()).toHaveLength(2);
 		expect(wrapper.find('tr').childAt(0).html()).toEqual('<td>test</td>');
 		expect(wrapper.find('tr').childAt(1).html()).toEqual('<td>test</td>');
+	});
+
+	it('applies the correct style for header rows', () => {
+		const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="Test" />);
+		expect(wrapper.find('tr').prop('style')).toEqual(headerRowStyle);
+	});
+
+	it('applies the correct style for non-header rows', () => {
+		const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="Test" />);
+		expect(wrapper.find('tr').prop('style')).toEqual(rowStyle);
 	});
 });
