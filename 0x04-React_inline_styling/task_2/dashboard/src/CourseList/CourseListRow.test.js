@@ -2,6 +2,9 @@ import React from 'react';
 import CourseListRow from './CourseListRow';
 import { shallow } from 'enzyme';
 import { rowStyle, headerRowStyle } from './CourseListRow';
+import { StyleSheetTestUtils } from 'aphrodite';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('Course List Row component test', () => {
 	it('should render without crashing', () => {
@@ -19,10 +22,8 @@ describe('Course List Row component test', () => {
 			/>
 		);
 
-		expect(wrapper.find('tr').children()).toHaveLength(1);
-		expect(wrapper.find('tr').childAt(0).html()).toEqual(
-			'<th colSpan="2">test</th>'
-		);
+		const thElement = <th className="th_13y7u7t" colSpan={2}>test</th>;
+		expect(wrapper.contains(thElement)).toEqual(true);
 	});
 
 	it('should render two cells when textSecondCell not null', () => {
@@ -30,13 +31,13 @@ describe('Course List Row component test', () => {
 			<CourseListRow
 				isHeader={false}
 				textFirstCell='test'
-				textSecondCell='test'
+				textSecondCell='test 2'
 			/>
 		);
 
-		expect(wrapper.find('tr').children()).toHaveLength(2);
-		expect(wrapper.find('tr').childAt(0).html()).toEqual('<td>test</td>');
-		expect(wrapper.find('tr').childAt(1).html()).toEqual('<td>test</td>');
+		expect(wrapper.find('td')).toHaveLength(2);
+		expect(wrapper.find('td').at(0).html()).toContain('test');
+		expect(wrapper.find('td').at(1).html()).toContain('test 2');
 	});
 
 	it('applies the correct style for header rows', () => {
