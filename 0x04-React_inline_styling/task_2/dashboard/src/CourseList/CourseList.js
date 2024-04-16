@@ -2,7 +2,6 @@ import React from 'react';
 import CourseListRow from './CourseListRow';
 import PropTypes from 'prop-types';
 import CourseShape from './CourseShape';
-import './CourseList.css';
 import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
@@ -16,17 +15,29 @@ const styles = StyleSheet.create({
 		marginLeft: 'auto',
 		marginRight: 'auto',
 	},
+	th: {
+		borderBottom: '1px solid #ddd',
+	},
+	thtd: {
+		width: '80%',
+	},
+	tr: {
+		':nth-child(2)': {
+			textAlign: 'left',
+		},
+	},
 });
 
 const CourseList = ({ listCourses }) => {
 	return (
 		<table id='CourseList' className={css(styles.table)}>
 			<thead>
-				<CourseListRow textFirstCell='Available courses' isHeader={true} />
+				<CourseListRow textFirstCell='Available courses' isHeader={true} className={css(styles.th)} />
 				<CourseListRow
 					textFirstCell='Course name'
 					textSecondCell='Credit'
 					isHeader={true}
+					className={(styles.th, styles.thtd)}
 				/>
 			</thead>
 			<tbody>
@@ -36,10 +47,11 @@ const CourseList = ({ listCourses }) => {
 							key={id}
 							textFirstCell={name}
 							textSecondCell={credit}
+							className={css(styles.thtd)}
 						/>
 					))
 				) : (
-					<CourseListRow textFirstCell='No course available yet' />
+					<CourseListRow textFirstCell='No course available yet' className={css(styles.tr)} />
 				)}
 			</tbody>
 		</table>
