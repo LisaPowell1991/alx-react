@@ -86,10 +86,10 @@ describe('Notification tests', () => {
 		expect(wrapper.find('div.menuItem').exists()).toBe(true);
 	});
 
-	/* it('displays Notifications when displayDrawer is true', () => {
+	it('displays Notifications when displayDrawer is true', () => {
 		const wrapper = shallow(<Notifications displayDrawer={true} />);
 		expect(wrapper.find('[data-testid="notifications"]').exists()).toBe(true);
-	}); */
+	});
 
 	it('renders correctly when listCourses is not passed', () => {
 		const wrapper = shallow(<Notifications displayDrawer={true} />);

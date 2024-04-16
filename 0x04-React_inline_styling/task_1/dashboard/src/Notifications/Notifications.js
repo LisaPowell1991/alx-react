@@ -46,7 +46,7 @@ class Notifications extends React.Component {
 						<div className='menuItem'>
 							<p>Your notifications</p>
 						</div>
-						<div className={css(styles.Notifications)}>
+						<div className={css(styles.Notifications)} data-testid="notifications">
 							<ul>
 								{this.props.listNotifications &&
 									this.props.listNotifications.length > 0 ? (
