@@ -8,7 +8,7 @@ import { StyleSheet, css } from 'aphrodite';
 const styles = StyleSheet.create({
 	Notifications: {
 		border: '2px dashed red',
-		padding: '0',
+		padding: '0.75em',
 		fontSize: '20px',
 		'@media (max-width: 800px)': {
 			width: '100%',
@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
 	},
 	ul: {
 		listStyleType: 'none',
+	},
+	button: {
+		border: 'none',
+		background: 'none',
+		position: 'absolute',
+		top: '1.75em',
+		right: '1.75em',
 	},
 });
 
@@ -49,11 +56,30 @@ class Notifications extends React.Component {
 			<React.Fragment>
 				{this.props.displayDrawer ? (
 					<div className='flex-area'>
-						<div className='menuItem'>
-							<h4>Here is the list of notification</h4>
-						</div>
-
 						<div className={css(styles.Notifications)} data-testid="notifications">
+							<div className='menuItem'>
+								<h4>Here is the list of notification</h4>
+							</div>
+							<button style={{
+								color: '#3a3a3a',
+								fontWeight: 'bold',
+								background: 'none',
+								border: 'none',
+								fontSize: '15px',
+								position: 'absolute',
+								right: '3px',
+								top: '3px',
+								cursor: 'pointer',
+								outline: 'none',
+							}}
+								aria-label="Close"
+								className={css(styles.button)}
+								onClick={(e) => {
+									console.log('Close button has been clicked');
+								}}
+							>
+								<img src={closeIcon} alt="close icon" width="15px" />
+							</button>
 							<ul className={css(styles.ul)}>
 								{this.props.listNotifications && this.props.listNotifications.length > 0 ? (
 									this.props.listNotifications.map(({ id, html, type, value }) => (
@@ -68,26 +94,7 @@ class Notifications extends React.Component {
 								) : (
 									<div className={css(styles.notificationHeader)}>
 										<NotificationItem value='No new notification for now' />
-										<button
-											style={{
-												color: '#3a3a3a',
-												fontWeight: 'bold',
-												background: 'none',
-												border: 'none',
-												fontSize: '15px',
-												position: 'absolute',
-												right: '3px',
-												top: '3px',
-												cursor: 'pointer',
-												outline: 'none',
-											}}
-											aria-label="Close"
-											onClick={(e) => {
-												console.log('Close button has been clicked');
-											}}
-										>
-											<img src={closeIcon} alt="close icon" width="15px" />
-										</button>
+
 									</div>
 								)}
 							</ul>
