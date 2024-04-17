@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
 		padding: '1.2em',
 	},
 	AppHeaderImg: {
-		width: '250px',
-		height: '250px',
+		width: '200px',
+		height: '200px',
 	},
 
 })
 
-const Header = () => {
+function Header() {
 	return (
 		<div className={css(styles.AppHeader)}>
 			<img src={logo} alt='Holberton' className={css(styles.AppHeaderImg)} />
