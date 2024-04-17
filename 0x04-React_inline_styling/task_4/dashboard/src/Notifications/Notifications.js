@@ -3,7 +3,7 @@ import closeIcon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
 import NotificationItemShape from './NotificationItemShape';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css, keyframes } from 'aphrodite';
 
 const fadeInOut = {
 	'0%': { opacity: 0.5 },
@@ -18,8 +18,9 @@ const bounce = {
 const styles = StyleSheet.create({
 	Notifications: {
 		border: '2px dashed red',
-		padding: '0.75em',
+		padding: '0.75em 1em',
 		fontSize: '20px',
+		marginRight: '0.5em',
 		'@media (max-width: 800px)': {
 			width: '100%',
 			height: '100%',
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
 			zIndex: '9999',
 			background: '#fff',
 			overflow: 'auto',
+			padding: '0.75em',
 		},
 	},
 
@@ -39,6 +41,8 @@ const styles = StyleSheet.create({
 		right: 0,
 		top: 0,
 		zIndex: 9999,
+		padding: '0.25em',
+		margin: '1em',
 		':hover': {
 			animationName: [fadeInOut, bounce],
 			animationDuration: '1s, 0.5s',
