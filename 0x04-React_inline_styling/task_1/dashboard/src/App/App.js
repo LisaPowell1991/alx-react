@@ -21,6 +21,13 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		flexDirection: 'row-reverse',
 	},
+	footer: {
+		borderTop: '4px solid red',
+		fontSize: '1.4rem',
+		padding: '0.5em',
+		textAlign: 'center',
+		fontStyle: 'italic',
+	}
 })
 
 class App extends React.Component {
