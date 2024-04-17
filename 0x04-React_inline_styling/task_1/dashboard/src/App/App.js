@@ -11,6 +11,10 @@ import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
+	body: {
+		paddingLeft: "3rem",
+		paddingTop: "3rem",
+	},
 	App: {
 		height: '100vh',
 		maxWidth: '100vw',
@@ -81,7 +85,7 @@ class App extends React.Component {
 							<Login />
 						</BodySectionWithMarginBottom>
 					)}
-					<BodySection title='News from the school'>
+					<BodySection title='News from the school' className={css(styles.body)}>
 						<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit.
 							Perspiciatis at tempora odio, necessitatibus repudiandae
@@ -89,7 +93,9 @@ class App extends React.Component {
 							ipsa iste vero dolor voluptates.
 						</p>
 					</BodySection>
-					<Footer />
+					<div className={css(styles.footer)}>
+						<Footer />
+					</div>
 				</div>
 			</React.Fragment>
 		);
