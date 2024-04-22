@@ -9,6 +9,9 @@ import Footer from '../Footer/Footer';
 import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import { shallow, mount } from 'enzyme';
+import { StyleSheetTestUtils, css } from 'aphrodite';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('App tests', () => {
 	it('renders without crashing', () => {
@@ -49,6 +52,24 @@ describe('App tests', () => {
 		expect(component.containsMatchingElement(<CourseList />)).toEqual(false);
 		expect(component.contains(<Login />)).toBe(false);
 	});
+	it('should have displayDrawer state as false by default', () => {
+		const wrapper = shallow(<App />);
+		expect(wrapper.state().displayDrawer).toBe(false);
+	});
+
+	it('should update displayDrawer state to true when handleDisplayDrawer is called', () => {
+		const wrapper = shallow(<App />);
+		wrapper.instance().handleDisplayDrawer();
+		expect(wrapper.state().displayDrawer).toBe(true);
+	});
+
+	it('should update displayDrawer state to false when handleHideDrawer is called', () => {
+		const wrapper = shallow(<App />);
+		wrapper.instance().handleDisplayDrawer(); // first set it to true
+		wrapper.instance().handleHideDrawer(); // then set it to false
+		expect(wrapper.state().displayDrawer).toBe(false);
+	});
+
 });
 
 describe('When ctrl + h is pressed', () => {

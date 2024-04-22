@@ -1,6 +1,9 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import Login from './Login';
+import { StyleSheetTestUtils } from 'aphrodite';
+
+StyleSheetTestUtils.suppressStyleInjection();
 
 describe('Header', () => {
 	it('should render without crashing', () => {

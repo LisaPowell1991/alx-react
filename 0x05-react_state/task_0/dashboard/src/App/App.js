@@ -5,16 +5,35 @@ import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import './App.css';
 import PropTypes from 'prop-types';
 import { getLatestNotification } from '../utils/utils';
 import BodySection from '../BodySection/BodySection';
+import { StyleSheet, css } from 'aphrodite';
+
+const styles = StyleSheet.create({
+	App: {
+		height: '100vh',
+		maxWidth: '100vw',
+	},
+	headingSection: {
+		borderBottom: '4px solid red',
+		display: 'flex',
+		justifyContent: 'flex-start',
+		flexDirection: 'row-reverse',
+	},
+})
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			displayDrawer: false,
+		};
+
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+		this.handleHideDrawer = this.handleHideDrawer.bind(this);
 	}
 
 	listCourses = [
@@ -36,6 +55,14 @@ class App extends React.Component {
 		}
 	}
 
+	handleDisplayDrawer() {
+		this.setState({ displayDrawer: true });
+	}
+
+	handleHideDrawer() {
+		this.setState({ displayDrawer: false });
+	}
+
 	componentDidMount() {
 		document.addEventListener('keydown', this.handleKeyPress);
 	}
@@ -47,9 +74,14 @@ class App extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div className='App'>
-					<div className='heading-section'>
-						<Notifications listNotifications={this.listNotifications} />
+				<div className={css(styles.App)}>
+					<div className={css(styles.headingSection)}>
+						<Notifications
+							listNotifications={this.listNotifications}
+							displayDrawer={this.state.displayDrawer}
+							handleDisplayDrawer={this.handleDisplayDrawer}
+							handleHideDrawer={this.handleHideDrawer}
+						/>
 						<Header />
 					</div>
 					{this.props.isLoggedIn ? (
