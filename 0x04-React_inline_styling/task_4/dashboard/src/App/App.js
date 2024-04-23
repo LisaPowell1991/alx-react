@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 	headingSection: {
 		borderBottom: '4px solid red',
 		display: 'flex',
-		justifyContent: 'flex-end',
+		justifyContent: 'space-between',
 		flexDirection: 'row-reverse',
 	},
 })

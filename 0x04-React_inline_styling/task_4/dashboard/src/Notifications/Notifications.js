@@ -18,9 +18,10 @@ const bounce = {
 const styles = StyleSheet.create({
 	Notifications: {
 		border: '2px dashed red',
-		padding: '0.75em 1em',
+		padding: '1em 1.5em',
 		fontSize: '20px',
 		marginRight: '0.5em',
+		marginBottom: '1em',
 		'@media (max-width: 800px)': {
 			width: '100%',
 			height: '100%',
@@ -55,7 +56,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	ul: {
-		listStyleType: 'none',
+		padding: 0,
+		'@media (max-width: 800px)': {
+			listStyleType: 'none',
+		},
 	},
 	button: {
 		border: 'none',
