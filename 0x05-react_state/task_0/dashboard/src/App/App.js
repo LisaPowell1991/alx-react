@@ -27,9 +27,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			displayDrawer: false,
-		};
+		this.state = { displayDrawer: false };
 
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 		this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
