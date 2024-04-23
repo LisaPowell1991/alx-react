@@ -3,13 +3,25 @@ import closeIcon from '../assets/close-icon.png';
 import NotificationItem from './NotificationItem';
 import PropTypes from 'prop-types';
 import NotificationItemShape from './NotificationItemShape';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css, keyframes } from 'aphrodite';
+
+const fadeInOut = {
+	'0%': { opacity: 0.5 },
+	'100%': { opacity: 1 },
+};
+
+const bounce = {
+	'0%, 100%': { transform: 'translateY(0px)' },
+	'50%': { transform: 'translateY(-5px)' },
+};
 
 const styles = StyleSheet.create({
 	Notifications: {
 		border: '2px dashed red',
-		padding: '0.75em',
+		padding: '0.75em 1em',
 		fontSize: '20px',
+		marginRight: '0.5em',
+		marginBottom: '1em',
 		'@media (max-width: 800px)': {
 			width: '100%',
 			height: '100%',
@@ -19,14 +31,33 @@ const styles = StyleSheet.create({
 			zIndex: '9999',
 			background: '#fff',
 			overflow: 'auto',
+			padding: '0.75em',
 		},
 	},
+
+	menuItem: {
+		cursor: 'pointer',
+		backgroundColor: '#fff8f8',
+		position: 'fixed',
+		right: 0,
+		top: 0,
+		zIndex: 9999,
+		padding: '0.25em',
+		margin: '1em',
+		':hover': {
+			animationName: [fadeInOut, bounce],
+			animationDuration: '1s, 0.5s',
+			animationIterationCount: '3, 3',
+		},
+	},
+
 	notificationHeader: {
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
 	ul: {
 		listStyleType: 'none',
+		padding: 0,
 	},
 	button: {
 		border: 'none',
@@ -101,7 +132,7 @@ class Notifications extends React.Component {
 						</div>
 					</div>
 				) : (
-					<div className='menuItem'>
+					<div className={css(styles.menuItem)} style={{ display: this.props.displayDrawer ? 'none' : 'block' }}>
 						<p>Your notifications</p>
 					</div>
 				)}

@@ -4,15 +4,16 @@ import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
 	AppHeader: {
-		fontSize: '1.4rem',
+		fontSize: '1.25rem',
 		color: 'red',
 		display: 'flex',
 		alignItems: 'center',
 		padding: '1.2em',
+		width: '100%',
 	},
 	AppHeaderImg: {
-		width: '250px',
-		height: '250px',
+		width: '150px',
+		height: '150px',
 	},
 
 })

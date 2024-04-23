@@ -4,30 +4,29 @@ import { StyleSheet, css } from 'aphrodite';
 const styles = StyleSheet.create({
 	AppBody: {
 		fontSize: '1.4em',
-		padding: '1.2em',
 		height: '45%',
 	},
 	formInputs: {
 		display: 'flex',
-		gap: '1.5em',
-		alignItems: 'center',
-		'@media (max-width: 900px)': {
-			flexDirection: 'column',
-			gap: '0.25em',
-			alignItems: 'flex-start',
-
-		},
-		'@media (min-width: 901px)': {
+		gap: '1em',
+		alignItems: 'flex-start',
+		flexDirection: 'column',
+		justifyContent: 'flex-start',
+		'@media (min-width: 900px)': {
 			flexDirection: 'row',
+			alignItems: 'flex-start',
 		},
 	},
 	input: {
 		height: '1.4em',
 		marginLeft: '0.75em',
 	},
-	buttonContainer: {
-		width: '20%',
-	}
+	button: {
+		marginTop: '1em',
+		'@media (min-width: 900px)': {
+			marginTop: '0',
+		},
+	},
 });
 
 const Login = () => {
@@ -44,9 +43,7 @@ const Login = () => {
 						<label htmlFor='password'>Password: </label>
 						<input type='password' name='password' id='password' className={css(styles.input)} />
 					</section>
-					<div className={css(styles.buttonContainer)}>
-						<button>OK</button>
-					</div>
+					<button className={css(styles.button)}>OK</button>
 				</section>
 			</div>
 		</>

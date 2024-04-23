@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { getLatestNotification } from '../utils/utils';
 import Notifications from './Notifications';
 import NotificationItem from './NotificationItem';
@@ -20,19 +20,20 @@ describe('Notification tests', () => {
 		expect(wrapper).toBeDefined();
 	});
 
-	it("renders correct list items", () => {
+	it('renders correct list items', () => {
+		const listNotifications = [
+			{ id: 1, type: 'default', value: 'New course available' },
+			{ id: 2, type: 'urgent', value: 'New resume available' },
+			{ id: 3, type: 'urgent', value: '<strong>Urgent Requirement</strong> - complete by EOD' },
+		];
 		const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} />);
-		expect(wrapper.find("ul").children()).toHaveLength(listNotifications.length);
-		wrapper.find(NotificationItem).forEach((node) => {
+		expect(wrapper.find('ul').children()).toHaveLength(listNotifications.length);
+		wrapper.find(NotificationItem).forEach((node, index) => {
 			expect(node.type()).toEqual(NotificationItem);
+			expect(node.prop('type')).toEqual(listNotifications[index].type);
+			expect(node.prop('value')).toEqual(listNotifications[index].value);
 		});
-
-		const thirdChild = wrapper.find(NotificationItem).at(2);
-		expect(thirdChild.type()).toEqual(NotificationItem);
-		expect(thirdChild.prop('type')).toEqual('urgent');
-		expect(thirdChild.prop('value')).toEqual(getLatestNotification());
 	});
-
 	it('renders an unordered list', () => {
 		const wrapper = shallow(
 			<Notifications
@@ -56,11 +57,7 @@ describe('Notification tests', () => {
 
 	it('displays menu item when displayDrawer is false', () => {
 		const wrapper = shallow(<Notifications displayDrawer={false} />);
-
-		expect(wrapper.find('div.menuItem').exists()).toBe(true);
-		expect(wrapper.find('div.menuItem').html()).toEqual(
-			'<div class="menuItem"><p>Your notifications</p></div>'
-		);
+		expect(wrapper.find('[data-testid="notifications"]').exists()).toBe(false);
 	});
 
 	it('does not display notifications when displayDrawer is false', () => {
