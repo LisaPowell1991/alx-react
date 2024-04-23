@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 	headingSection: {
 		borderBottom: '4px solid red',
 		display: 'flex',
-		justifyContent: 'flex-start',
+		justifyContent: 'space-between',
 		flexDirection: 'row-reverse',
 	},
 })
@@ -77,10 +77,10 @@ class App extends React.Component {
 				<div className={css(styles.App)}>
 					<div className={css(styles.headingSection)}>
 						<Notifications
-							listNotifications={this.listNotifications}
 							displayDrawer={this.state.displayDrawer}
 							handleDisplayDrawer={this.handleDisplayDrawer}
 							handleHideDrawer={this.handleHideDrawer}
+							listNotifications={this.listNotifications}
 						/>
 						<Header />
 					</div>

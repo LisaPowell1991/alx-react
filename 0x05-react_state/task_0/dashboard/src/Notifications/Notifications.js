@@ -18,9 +18,10 @@ const bounce = {
 const styles = StyleSheet.create({
 	Notifications: {
 		border: '2px dashed red',
-		padding: '0.75em 1em',
+		padding: '1em 1.5em',
 		fontSize: '20px',
 		marginRight: '0.5em',
+		marginBottom: '1em',
 		'@media (max-width: 800px)': {
 			width: '100%',
 			height: '100%',
@@ -55,7 +56,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	ul: {
-		listStyleType: 'none',
+		padding: 0,
+		'@media (max-width: 800px)': {
+			listStyleType: 'none',
+		},
 	},
 	button: {
 		border: 'none',
@@ -69,12 +73,14 @@ const styles = StyleSheet.create({
 class Notifications extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.markAsRead = this.markAsRead.bind(this);
 	}
 
-	shouldComponentUpdate(nextProps) {
-		return nextProps.length > this.props.listNotifications.length;
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			nextProps.listNotifications.length > this.props.listNotifications.length ||
+			nextProps.displayDrawer !== this.props.displayDrawer
+		);
 	}
 
 	markAsRead(id) {
@@ -90,26 +96,28 @@ class Notifications extends React.Component {
 							<div className='menuItem'>
 								<h4>Here is the list of notification</h4>
 							</div>
-							<button style={{
-								color: '#3a3a3a',
-								fontWeight: 'bold',
-								background: 'none',
-								border: 'none',
-								fontSize: '15px',
-								position: 'absolute',
-								right: '3px',
-								top: '3px',
-								cursor: 'pointer',
-								outline: 'none',
-							}}
+							<button
+								style={{
+									color: '#3a3a3a',
+									fontWeight: 'bold',
+									background: 'none',
+									border: 'none',
+									fontSize: '10px',
+									position: 'absolute',
+									right: '3px',
+									top: '3px',
+									cursor: 'pointer',
+									outline: 'none',
+								}}
 								aria-label="Close"
 								className={css(styles.button)}
 								onClick={(e) => {
 									console.log('Close button has been clicked');
-									this.props.handleHideDrawer;
+									this.props.handleHideDrawer();
 								}}
+								data-testid="close-button"
 							>
-								<img src={closeIcon} alt="close icon" width="15px" />
+								<img src={closeIcon} alt="close icon" />
 							</button>
 							<ul className={css(styles.ul)}>
 								{this.props.listNotifications && this.props.listNotifications.length > 0 ? (
@@ -123,19 +131,21 @@ class Notifications extends React.Component {
 										/>
 									))
 								) : (
-									<div
-										className={css(styles.menuItem)}
-										style={{ display: this.props.displayDrawer ? 'none' : 'block' }}
-										onClick={this.props.handleDisplayDrawer} // Add this line
-									>
-										<p>Your notifications</p>
+									<div className={css(styles.notificationHeader)}>
+										<NotificationItem value='No new notification for now' />
+
 									</div>
 								)}
 							</ul>
 						</div>
 					</div>
 				) : (
-					<div className={css(styles.menuItem)} style={{ display: this.props.displayDrawer ? 'none' : 'block' }}>
+					<div
+						className={css(styles.menuItem)}
+						style={{ display: this.props.displayDrawer ? 'none' : 'block' }}
+						onClick={this.props.handleDisplayDrawer}
+						data-testid="menu-item"
+					>
 						<p>Your notifications</p>
 					</div>
 				)}

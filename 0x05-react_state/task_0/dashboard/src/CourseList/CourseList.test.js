@@ -19,12 +19,18 @@ describe('CourseList component tests', () => {
 		expect(wrapper.exists()).toBe(true);
 	});
 
-	it('renders 3 different rows', () => {
+	it('renders 5 different rows', () => {
+		const listCourses = [
+			{ id: 1, name: 'ES6', credit: 60 },
+			{ id: 2, name: 'Webpack', credit: 20 },
+			{ id: 3, name: 'React', credit: 40 },
+		];
 		const wrapper = shallow(<CourseList listCourses={listCourses} />);
-
-		expect(wrapper.find('tbody').children()).toHaveLength(3);
-		expect(wrapper.find('tbody').childAt(0).dive().find('td').at(0).text()).toEqual('ES6');
-		expect(wrapper.find('tbody').childAt(0).dive().find('td').at(1).text()).toEqual('60');
+		expect(wrapper.find('tbody').children()).toHaveLength(listCourses.length);
+		listCourses.forEach((course, index) => {
+			expect(wrapper.find('tbody').childAt(index).dive().find('td').at(0).text()).toEqual(course.name);
+			expect(wrapper.find('tbody').childAt(index).dive().find('td').at(1).text()).toEqual(course.credit.toString());
+		});
 	});
 
 	it('renders correctly when passed a list of courses', () => {

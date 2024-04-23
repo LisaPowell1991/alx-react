@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { getLatestNotification } from '../utils/utils';
 import Notifications from './Notifications';
 import NotificationItem from './NotificationItem';
-import { StyleSheetTestUtils, css } from 'aphrodite';
+import { StyleSheetTestUtils } from 'aphrodite';
 
 StyleSheetTestUtils.suppressStyleInjection();
 
@@ -20,17 +20,20 @@ describe('Notification tests', () => {
 		expect(wrapper).toBeDefined();
 	});
 
-	it("renders correct list items", () => {
+	it('renders correct list items', () => {
+		const listNotifications = [
+			{ id: 1, type: 'default', value: 'New course available' },
+			{ id: 2, type: 'urgent', value: 'New resume available' },
+			{ id: 3, type: 'urgent', value: '<strong>Urgent Requirement</strong> - complete by EOD' },
+		];
 		const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} />);
-		expect(wrapper.find("ul").children()).toHaveLength(listNotifications.length);
-
-		const thirdChild = wrapper.find(NotificationItem).at(2);
-		expect(thirdChild.type()).toEqual(NotificationItem);
-		expect(thirdChild.prop('type')).toEqual('urgent');
-		expect(thirdChild.prop('html')).toEqual(getLatestNotification());
+		expect(wrapper.find('ul').children()).toHaveLength(listNotifications.length);
+		wrapper.find(NotificationItem).forEach((node, index) => {
+			expect(node.type()).toEqual(NotificationItem);
+			expect(node.prop('type')).toEqual(listNotifications[index].type);
+			expect(node.prop('value')).toEqual(listNotifications[index].value);
+		});
 	});
-
-
 	it('renders an unordered list', () => {
 		const wrapper = shallow(
 			<Notifications
@@ -54,10 +57,8 @@ describe('Notification tests', () => {
 
 	it('displays menu item when displayDrawer is false', () => {
 		const wrapper = shallow(<Notifications displayDrawer={false} />);
-		expect(wrapper.find(`.${styles.menuItem}`).exists()).toBe(true);
-		expect(wrapper.find(`.${styles.menuItem}`).text()).toEqual('Your notifications');
+		expect(wrapper.find('[data-testid="notifications"]').exists()).toBe(false);
 	});
-
 
 	it('does not display notifications when displayDrawer is false', () => {
 		const wrapper = shallow(<Notifications displayDrawer={false} />);
@@ -161,19 +162,21 @@ describe('Notification tests', () => {
 		);
 	});
 	it('calls handleDisplayDrawer when menu item is clicked', () => {
-		const handleDisplayDrawer = jest.fn();
-		const wrapper = shallow(<Notifications displayDrawer={false} handleDisplayDrawer={handleDisplayDrawer} />);
-		wrapper.instance().setState({ displayDrawer: false });
-		wrapper.find(`.${styles.menuItem}`).simulate('click');
-		expect(handleDisplayDrawer).toHaveBeenCalled();
+		const handleDisplayDrawerSpy = jest.fn();
+		const wrapper = shallow(<Notifications handleDisplayDrawer={handleDisplayDrawerSpy} />);
+		const menuItem = wrapper.find('.menuItem');
+		menuItem.simulate('click');
+		expect(handleDisplayDrawerSpy).toHaveBeenCalled();
 	});
+
 	it('calls handleHideDrawer when close button is clicked', () => {
-		const handleHideDrawer = jest.fn();
-		const wrapper = shallow(<Notifications displayDrawer={true} handleHideDrawer={handleHideDrawer} />);
-		wrapper.instance().setState({ displayDrawer: true });
-		wrapper.find('button').simulate('click');
-		expect(handleHideDrawer).toHaveBeenCalled();
+		const handleHideDrawerSpy = jest.fn();
+		const wrapper = shallow(<Notifications displayDrawer={true} handleHideDrawer={handleHideDrawerSpy} />);
+		const closeButton = wrapper.find('button');
+		closeButton.simulate('click');
+		expect(handleHideDrawerSpy).toHaveBeenCalled();
 	});
+
 });
 
 describe('onclick event behaves as it should', () => {

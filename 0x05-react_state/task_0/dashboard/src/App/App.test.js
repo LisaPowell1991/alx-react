@@ -9,7 +9,7 @@ import Footer from '../Footer/Footer';
 import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import { shallow, mount } from 'enzyme';
-import { StyleSheetTestUtils, css } from 'aphrodite';
+import { StyleSheetTestUtils } from 'aphrodite';
 
 StyleSheetTestUtils.suppressStyleInjection();
 
@@ -52,18 +52,18 @@ describe('App tests', () => {
 		expect(component.containsMatchingElement(<CourseList />)).toEqual(false);
 		expect(component.contains(<Login />)).toBe(false);
 	});
-	it('should have displayDrawer state as false by default', () => {
+	it('checks that the default state for displayDrawer is false', () => {
 		const wrapper = shallow(<App />);
 		expect(wrapper.state().displayDrawer).toBe(false);
 	});
 
-	it('should update displayDrawer state to true when handleDisplayDrawer is called', () => {
+	it('checks that after calling handleDisplayDrawer, the state is true', () => {
 		const wrapper = shallow(<App />);
 		wrapper.instance().handleDisplayDrawer();
 		expect(wrapper.state().displayDrawer).toBe(true);
 	});
 
-	it('should update displayDrawer state to false when handleHideDrawer is called', () => {
+	it('checks that after calling handleHideDrawer, the state is false', () => {
 		const wrapper = shallow(<App />);
 		wrapper.instance().handleDisplayDrawer(); // first set it to true
 		wrapper.instance().handleHideDrawer(); // then set it to false
