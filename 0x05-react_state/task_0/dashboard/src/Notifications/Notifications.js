@@ -160,8 +160,8 @@ class Notifications extends React.Component {
 
 Notifications.propTypes = {
 	displayDrawer: PropTypes.bool,
-	handleDisplayDrawer: PropTypes.func,
-	handleHideDrawer: PropTypes.func,
+	handleDisplayDrawer: PropTypes.func.isRequired,
+	handleHideDrawer: PropTypes.func.isRequired,
 	listNotifications: PropTypes.arrayOf(NotificationItemShape),
 };
 
