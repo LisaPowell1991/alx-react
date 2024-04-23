@@ -76,13 +76,10 @@ class Notifications extends React.Component {
 		this.markAsRead = this.markAsRead.bind(this);
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		const newListLength = Array.isArray(nextProps.listNotifications) ? nextProps.listNotifications.length : 0;
-		const currentListLength = Array.isArray(this.props.listNotifications) ? this.props.listNotifications.length : 0;
-
+	shouldComponentUpdate(nextProps) {
 		return (
-			(newListLength > currentListLength) ||
-			(nextProps.displayDrawer !== this.props.displayDrawer)
+			nextProps.length > this.props.listNotifications.length ||
+			nextProps.displayDrawer !== this.props.displayDrawer
 		);
 	}
 
