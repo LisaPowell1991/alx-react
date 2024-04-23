@@ -46,12 +46,14 @@ const CourseList = ({ listCourses }) => {
 						<CourseListRow
 							key={id}
 							textFirstCell={name}
-							textSecondCell={credit}
+							textSecondCell={credit.toString()}
 							className={css(styles.thtd)}
 						/>
 					))
 				) : (
-					<CourseListRow textFirstCell='No course available yet' className={css(styles.tr)} />
+					Array(5).fill().map((_, i) => (
+						<CourseListRow key={i} textFirstCell={`Row ${i + 1}`} className={css(styles.tr)} />
+					))
 				)}
 			</tbody>
 		</table>

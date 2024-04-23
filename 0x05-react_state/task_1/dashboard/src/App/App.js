@@ -11,10 +11,6 @@ import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
-	body: {
-		paddingLeft: "3rem",
-		paddingTop: "3rem",
-	},
 	App: {
 		height: '100vh',
 		maxWidth: '100vw',
@@ -25,20 +21,17 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		flexDirection: 'row-reverse',
 	},
-	footer: {
-		borderTop: '4px solid red',
-		fontSize: '1.4rem',
-		padding: '0.5em',
-		textAlign: 'center',
-		fontStyle: 'italic',
-	}
 })
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.state = { displayDrawer: false };
+
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+		this.handleHideDrawer = this.handleHideDrawer.bind(this);
 	}
 
 	listCourses = [
@@ -60,6 +53,14 @@ class App extends React.Component {
 		}
 	}
 
+	handleDisplayDrawer() {
+		this.setState({ displayDrawer: true });
+	}
+
+	handleHideDrawer() {
+		this.setState({ displayDrawer: false });
+	}
+
 	componentDidMount() {
 		document.addEventListener('keydown', this.handleKeyPress);
 	}
@@ -69,11 +70,17 @@ class App extends React.Component {
 	}
 
 	render() {
+		const { displayDrawer } = this.state;
 		return (
 			<React.Fragment>
 				<div className={css(styles.App)}>
 					<div className={css(styles.headingSection)}>
-						<Notifications listNotifications={this.listNotifications} />
+						<Notifications
+							displayDrawer={displayDrawer}
+							handleDisplayDrawer={this.handleDisplayDrawer}
+							handleHideDrawer={this.handleHideDrawer}
+							listNotifications={this.listNotifications}
+						/>
 						<Header />
 					</div>
 					{this.props.isLoggedIn ? (
@@ -85,7 +92,7 @@ class App extends React.Component {
 							<Login />
 						</BodySectionWithMarginBottom>
 					)}
-					<BodySection title='News from the school' className={css(styles.body)}>
+					<BodySection title='News from the school'>
 						<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit.
 							Perspiciatis at tempora odio, necessitatibus repudiandae
@@ -93,9 +100,7 @@ class App extends React.Component {
 							ipsa iste vero dolor voluptates.
 						</p>
 					</BodySection>
-					<div className={css(styles.footer)}>
-						<Footer />
-					</div>
+					<Footer />
 				</div>
 			</React.Fragment>
 		);
