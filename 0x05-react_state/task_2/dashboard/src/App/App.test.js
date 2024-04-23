@@ -29,11 +29,13 @@ describe('App tests', () => {
 
 		expect(component.contains(<Header />)).toBe(true);
 	});
+
 	it('should render Login Component', () => {
 		const component = shallow(<App />);
-
-		expect(component.contains(<Login />)).toBe(true);
+		component.setState({ user: { isLoggedIn: false } });
+		expect(component.find('BodySectionWithMarginBottom').dive().find('Login')).toHaveLength(1);
 	});
+
 	it('should render Footer component', () => {
 		const component = shallow(<App />);
 
@@ -41,27 +43,59 @@ describe('App tests', () => {
 	});
 	it('does not render courselist if logged out', () => {
 		const component = shallow(<App />);
-
-		component.setProps({ isLogedIn: false });
-
-		expect(component.contains(<CourseList />)).toBe(false);
+		expect(component.state().user.isLoggedIn).toBe(false);
+		expect(component.exists('CourseList')).toBe(false);
 	});
-	it('renders courselist if logged in', () => {
-		const component = shallow(<App isLoggedIn={true} />);
 
-		expect(component.containsMatchingElement(<CourseList />)).toEqual(false);
-		expect(component.contains(<Login />)).toBe(false);
+	it('renders courselist if logged in', () => {
+		const component = shallow(<App />);
+		component.setState({ user: { isLoggedIn: true } });
+		expect(component.state().user.isLoggedIn).toBe(true);
+		expect(component.exists('CourseList')).toBe(true);
+		expect(component.exists('Login')).toBe(false);
+	});
+
+	it('checks that the default state for displayDrawer is false', () => {
+		const wrapper = shallow(<App />);
+		expect(wrapper.state().displayDrawer).toBe(false);
+	});
+
+	it('checks that after calling handleDisplayDrawer, the state is true', () => {
+		const wrapper = shallow(<App />);
+		wrapper.instance().handleDisplayDrawer();
+		expect(wrapper.state().displayDrawer).toBe(true);
+	});
+
+	it('checks that after calling handleHideDrawer, the state is false', () => {
+		const wrapper = shallow(<App />);
+		wrapper.instance().handleDisplayDrawer(); // first set it to true
+		wrapper.instance().handleHideDrawer(); // then set it to false
+		expect(wrapper.state().displayDrawer).toBe(false);
+	});
+
+	it('checks that after calling logOut, the user is logged out', () => {
+		const wrapper = shallow(<App />);
+		wrapper.instance().logIn('test@test.com', 'password');
+		wrapper.instance().logOut();
+		expect(wrapper.state().user.isLoggedIn).toBe(false);
+	});
+
+	it('checks that after calling logIn, the user is logged in', () => {
+		const wrapper = shallow(<App />);
+		wrapper.instance().logIn('test@test.com', 'password');
+		expect(wrapper.state().user.isLoggedIn).toBe(true);
 	});
 });
 
 describe('When ctrl + h is pressed', () => {
 	it('calls logOut function', () => {
-		const mocked = jest.fn();
-		const wrapper = mount(<App logOut={mocked} />);
+		const wrapper = mount(<App />);
+		const instance = wrapper.instance();
+		jest.spyOn(instance, 'logOut');
 		const event = new KeyboardEvent('keydown', { ctrlKey: true, key: 'h' });
 		document.dispatchEvent(event);
 
-		expect(mocked).toHaveBeenCalledTimes(1);
+		expect(instance.logOut).toHaveBeenCalledTimes(1);
 		wrapper.unmount();
 	});
 
