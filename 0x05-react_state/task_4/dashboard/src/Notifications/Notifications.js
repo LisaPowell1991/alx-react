@@ -1,9 +1,9 @@
-import React from 'react';
-import closeIcon from '../assets/close-icon.png';
-import NotificationItem from './NotificationItem';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import NotificationItem from './NotificationItem';
 import NotificationItemShape from './NotificationItemShape';
 import { StyleSheet, css, keyframes } from 'aphrodite';
+import closeIcon from '../assets/close-icon.png';
 
 const fadeInOut = {
 	'0%': { opacity: 0.5 },
@@ -18,9 +18,10 @@ const bounce = {
 const styles = StyleSheet.create({
 	Notifications: {
 		border: '2px dashed red',
-		padding: '0.75em 1em',
+		padding: '1em 1.5em',
 		fontSize: '20px',
 		marginRight: '0.5em',
+		marginBottom: '1em',
 		'@media (max-width: 800px)': {
 			width: '100%',
 			height: '100%',
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
 			padding: '0.75em',
 		},
 	},
-
 	menuItem: {
 		cursor: 'pointer',
 		backgroundColor: '#fff8f8',
@@ -49,13 +49,15 @@ const styles = StyleSheet.create({
 			animationIterationCount: '3, 3',
 		},
 	},
-
 	notificationHeader: {
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
 	ul: {
-		listStyleType: 'none',
+		padding: 0,
+		'@media (max-width: 800px)': {
+			listStyleType: 'none',
+		},
 	},
 	button: {
 		border: 'none',
@@ -66,20 +68,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-class Notifications extends React.Component {
-	constructor(props) {
-		super(props);
-		this.markAsRead = this.markAsRead.bind(this);
-	}
-
-	shouldComponentUpdate(nextProps) {
-		return nextProps.length > this.props.listNotifications.length;
-	}
-
-	markAsRead(id) {
-		console.log(`Notification ${id} has been marked as read`);
-	}
-
+class Notifications extends PureComponent {
 	render() {
 		return (
 			<React.Fragment>
@@ -87,50 +76,39 @@ class Notifications extends React.Component {
 					<div className='flex-area'>
 						<div className={css(styles.Notifications)} data-testid="notifications">
 							<div className='menuItem'>
-								<h4>Here is the list of notification</h4>
+								<h4>Here is the list of notifications</h4>
 							</div>
-							<button style={{
-								color: '#3a3a3a',
-								fontWeight: 'bold',
-								background: 'none',
-								border: 'none',
-								fontSize: '15px',
-								position: 'absolute',
-								right: '3px',
-								top: '3px',
-								cursor: 'pointer',
-								outline: 'none',
-							}}
-								aria-label="Close"
+							<button
 								className={css(styles.button)}
-								onClick={(e) => {
-									console.log('Close button has been clicked');
-								}}
+								onClick={this.props.handleHideDrawer}
+								aria-label="Close"
+								data-testid="close-button"
 							>
-								<img src={closeIcon} alt="close icon" width="15px" />
+								<img src={closeIcon} alt="close icon" />
 							</button>
 							<ul className={css(styles.ul)}>
-								{this.props.listNotifications && this.props.listNotifications.length > 0 ? (
+								{this.props.listNotifications.length > 0 ? (
 									this.props.listNotifications.map(({ id, html, type, value }) => (
 										<NotificationItem
 											key={id}
-											markAsRead={this.markAsRead}
+											markAsRead={() => this.props.markNotificationAsRead(id)}
 											type={type}
 											value={value}
 											html={html}
 										/>
 									))
 								) : (
-									<div className={css(styles.notificationHeader)}>
-										<NotificationItem value='No new notification for now' />
-
-									</div>
+									<NotificationItem value='No new notification for now' />
 								)}
 							</ul>
 						</div>
 					</div>
 				) : (
-					<div className={css(styles.menuItem)} style={{ display: this.props.displayDrawer ? 'none' : 'block' }}>
+					<div
+						className={css(styles.menuItem)}
+						onClick={this.props.handleDisplayDrawer}
+						data-testid="menu-item"
+					>
 						<p>Your notifications</p>
 					</div>
 				)}
@@ -141,12 +119,18 @@ class Notifications extends React.Component {
 
 Notifications.propTypes = {
 	displayDrawer: PropTypes.bool,
+	handleDisplayDrawer: PropTypes.func.isRequired,
+	handleHideDrawer: PropTypes.func.isRequired,
 	listNotifications: PropTypes.arrayOf(NotificationItemShape),
+	markNotificationAsRead: PropTypes.func,
 };
 
 Notifications.defaultProps = {
 	displayDrawer: false,
+	handleDisplayDrawer: () => { },
+	handleHideDrawer: () => { },
 	listNotifications: [],
+	markNotificationAsRead: () => { }, // Default function does nothing
 };
 
 export default Notifications;
