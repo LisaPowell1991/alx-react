@@ -28,7 +28,7 @@ class Header extends React.Component {
 			<div className={css(styles.AppHeader)}>
 				<img src={logo} alt='Holberton' className={css(styles.AppHeaderImg)} />
 				<h1>School dashboard</h1>
-				{user.isLoggedIn && (
+				{user && user.isLoggedIn && (
 					<div className={css(styles.logoutSection)} id="logoutSection">
 						Welcome {user.email} (<a href="#" onClick={logOut}>logout</a>)
 					</div>
