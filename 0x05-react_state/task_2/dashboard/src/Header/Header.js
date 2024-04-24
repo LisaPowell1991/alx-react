@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
 		width: '150px',
 		height: '150px',
 	},
+	greeting: {
+		margin: '1rem',
+		fontSize: '1rem',
+	},
 
 })
 
@@ -28,10 +32,15 @@ class Header extends React.Component {
 			<div className={css(styles.AppHeader)}>
 				<img src={logo} alt='Holberton' className={css(styles.AppHeaderImg)} />
 				<h1>School dashboard</h1>
-				{user && user.isLoggedIn && (
-					<div className={css(styles.logoutSection)} id="logoutSection">
-						Welcome {user.email} (<a href="#" onClick={logOut}>logout</a>)
-					</div>
+				{user.isLoggedIn && (
+					<section className={css(styles.greeting)} id="logoutSection">
+						Welcome<strong> {user.email} </strong>
+						<em>
+							<a href="#" onClick={logOut}>
+								(logout)
+							</a>
+						</em>
+					</section>
 				)}
 			</div>
 		);
