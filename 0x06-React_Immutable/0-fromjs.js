@@ -5,7 +5,7 @@ function getImmutableObject(object) {
     return fromJS(object);
 }
 
-// Test the function
+/* // Test the function
 const testObject = { a: 1, b: 2, c: 3 };
 const immutableObject = getImmutableObject(testObject);
-console.log(immutableObject);
+console.log(immutableObject); */
