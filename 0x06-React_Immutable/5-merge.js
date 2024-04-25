@@ -9,5 +9,5 @@ export function concatElements(page1, page2) {
 // Function to merge two objects into an Immutable List of their values, preferring page2's values
 export function mergeElements(page1, page2) {
     // Convert objects to Maps, merge them, and then convert the values to a List
-    return Map(page1).merge(Map(page2)).toList();
+    return Map(page1).merge(Map(page2));
 }
