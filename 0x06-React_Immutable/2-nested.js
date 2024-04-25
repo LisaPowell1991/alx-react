@@ -5,5 +5,5 @@ export default function accessImmutableObject(object, array) {
     const immutableObj = fromJS(object);
 
     // Access the value of the key in the array
-    return immutableObj.getIn(array);
+    return immutableObj.getIn(array, undefined);
 }
