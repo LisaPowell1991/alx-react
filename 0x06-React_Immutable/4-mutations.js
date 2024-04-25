@@ -11,10 +11,7 @@ export const map = Map({
 });
 
 // Modify the value of the indices 2 and 4
-export const map2 = map
-    .set(2, 'Benjamin')
-    .set(4, 'Oliver');
-
-// Test the constants
-console.log(map);
-console.log(map2);  
+export const map2 = map.withMutations((values) => {
+    values.set(2, 'Benjamin')
+        .set(4, 'Oliver');
+});  
