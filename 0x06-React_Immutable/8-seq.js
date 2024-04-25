@@ -1,19 +1,17 @@
 import { Seq } from 'immutable';
 
-// Function to print students with scores >= 70
-export default function printBestStudents(object) {
-    const students = Seq(object)
+// Function to print students with a score >= 70 and capitalize their names
+export function printBestStudents(grades) {
+    // Create a sequence from the grades object
+    Seq(grades)
+        // Filter out students with a score less than 70
         .filter(student => student.score >= 70)
+        // Capitalize the first letter of the first name and the last name
         .map(student => ({
-            score: student.score,
-            firstName: capitalize(student.firstName),
-            lastName: capitalize(student.lastName),
+            ...student,
+            firstName: student.firstName.charAt(0).toUpperCase() + student.firstName.slice(1),
+            lastName: student.lastName.charAt(0).toUpperCase() + student.lastName.slice(1),
         }))
-        .toObject();
-    console.log(JSON.stringify(students, null, 2));
-}
-
-// Function to capitalize the first letter of a string
-function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+        // Print the result to the console
+        .forEach(student => console.log(student));
 }
