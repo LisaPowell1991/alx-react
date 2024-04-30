@@ -17,8 +17,7 @@ describe('getAllNotificationsByUser', () => {
                 value: 'Non diam phasellus vestibulum lorem sed risus ultricies. Tellus mauris a diam maecenas sed',
             },
         ];
-        const result = getAllNotificationsByUser(userId);
 
-        expect(result).toEqual(expect.arrayContaining(expectedNotifications));
+        expect(getAllNotificationsByUser(userId)).toEqual(expect.arrayContaining(expectedNotifications));
     });
 });
