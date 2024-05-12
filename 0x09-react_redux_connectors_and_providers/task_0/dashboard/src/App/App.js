@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
@@ -146,4 +147,11 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+// Define mapStateToProps and export the connected component
+const mapStateToProps = (state) => {
+	return {
+		isLoggedIn: state.uiReducer.isLoggedIn
+	};
+};
+
+export default connect(mapStateToProps)(App);
