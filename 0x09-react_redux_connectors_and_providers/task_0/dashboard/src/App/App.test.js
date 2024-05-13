@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import App from './App';
+import { App, mapStateToProps } from './App';
+import { fromJS } from 'immutable';
 import Login from '../Login/Login';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -145,4 +146,16 @@ describe('When ctrl + h is pressed', () => {
 		wrapper.unmount();
 	});
 	window.alert.mockClear();
+});
+
+describe('mapStateToProps', () => {
+	it('should return the right object when state is passed', () => {
+		const state = fromJS({
+			isUserLoggedIn: true
+		});
+
+		const result = mapStateToProps(state);
+
+		expect(result).toEqual({ isLoggedIn: true });
+	});
 });

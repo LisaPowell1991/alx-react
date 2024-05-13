@@ -150,7 +150,7 @@ class App extends React.Component {
 // Define mapStateToProps and export the connected component
 export const mapStateToProps = (state) => {
 	return {
-		isLoggedIn: state.uiReducer.isLoggedIn
+		isLoggedIn: state.get("isUserLoggedIn"),
 	};
 };
 

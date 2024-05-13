@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import uiReducer from './reducers/uiReducer';
-import App from './App/App';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import App from "./App/App";
+import uiReducer, { initialState } from "./reducers/uiReducer";
+import { Map } from "immutable";
 
 // Create the store with uiReducer
-const store = createStore(uiReducer);
+const store = createStore(uiReducer, Map(initialState));
 
 ReactDOM.render(
 	<React.StrictMode>

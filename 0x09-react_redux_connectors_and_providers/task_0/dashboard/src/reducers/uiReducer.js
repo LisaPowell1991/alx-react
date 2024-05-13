@@ -7,7 +7,7 @@ export const initialState = Map({
     user: {}
 });
 
-export function uiReducer(state = initialState, action) {
+export default function uiReducer(state = initialState, action) {
     switch (action.type) {
         case DISPLAY_NOTIFICATION_DRAWER:
             return state.set(
