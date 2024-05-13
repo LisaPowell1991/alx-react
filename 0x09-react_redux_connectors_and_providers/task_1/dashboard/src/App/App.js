@@ -10,7 +10,6 @@ import Footer from "../Footer/Footer";
 import PropTypes from "prop-types";
 import { getLatestNotification } from "../utils/utils";
 import { StyleSheet, css } from "aphrodite";
-import { user, logOut } from "./AppContext";
 import AppContext from "./AppContext";
 import {
 	displayNotificationDrawer,
@@ -31,11 +30,24 @@ const styles = StyleSheet.create({
 });
 
 class App extends React.Component {
+	static defaultProps = {
+		isLoggedIn: false,
+		displayDrawer: false,
+		displayNotificationDrawer: () => { },
+		hideNotificationDrawer: () => { },
+	};
+
+	static propTypes = {
+		isLoggedIn: PropTypes.bool,
+		displayDrawer: PropTypes.bool,
+		displayNotificationDrawer: PropTypes.func,
+		hideNotificationDrawer: PropTypes.func,
+	};
+
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			displayDrawer: false,
 			user: {
 				email: '',
 				password: '',
@@ -49,8 +61,6 @@ class App extends React.Component {
 		};
 
 		this.handleKeyPress = this.handleKeyPress.bind(this);
-		this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-		this.handleHideDrawer = this.handleHideDrawer.bind(this);
 		this.logIn = this.logIn.bind(this);
 		this.logOut = this.logOut.bind(this);
 		this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
@@ -89,14 +99,6 @@ class App extends React.Component {
 		}
 	}
 
-	handleDisplayDrawer() {
-		this.setState({ displayDrawer: true });
-	}
-
-	handleHideDrawer() {
-		this.setState({ displayDrawer: false });
-	}
-
 	markNotificationAsRead(id) {
 		this.setState(prevState => ({
 			listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
@@ -112,7 +114,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { user, logOut, listNotifications } = this.state;
+		const { user, listNotifications } = this.state;
 
 		const {
 			isLoggedIn,
@@ -135,7 +137,7 @@ class App extends React.Component {
 							/>
 							<Header />
 						</div>
-						{user.isLoggedIn ? (
+						{isLoggedIn ? (
 							<BodySectionWithMarginBottom title='Course list'>
 								<CourseList listCourses={this.listCourses} />
 							</BodySectionWithMarginBottom>
