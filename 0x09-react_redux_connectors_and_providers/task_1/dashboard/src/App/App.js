@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -6,7 +7,6 @@ import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
-import PropTypes from 'prop-types';
 import { getLatestNotification } from '../utils/utils';
 import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
@@ -31,7 +31,6 @@ class App extends React.Component {
 		super(props);
 
 		this.state = {
-			displayDrawer: false,
 			user: {
 				email: '',
 				password: '',
@@ -44,9 +43,6 @@ class App extends React.Component {
 			]
 		};
 
-		this.handleKeyPress = this.handleKeyPress.bind(this);
-		this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-		this.handleHideDrawer = this.handleHideDrawer.bind(this);
 		this.logIn = this.logIn.bind(this);
 		this.logOut = this.logOut.bind(this);
 		this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
@@ -149,6 +145,20 @@ class App extends React.Component {
 	}
 }
 
+App.defaultProps = {
+	isLoggedIn: false,
+	displayDrawer: false,
+	displayNotificationDrawer: () => { },
+	hideNotificationDrawer: () => { },
+};
+
+App.propTypes = {
+	isLoggedIn: PropTypes.bool,
+	displayDrawer: PropTypes.bool,
+	displayNotificationDrawer: PropTypes.func,
+	hideNotificationDrawer: PropTypes.func,
+};
+
 // Define mapStateToProps and export the connected component
 export const mapStateToProps = (state) => {
 	return {
@@ -158,7 +168,7 @@ export const mapStateToProps = (state) => {
 };
 
 // Define mapDispatchToProps and export the connected component
-export const mapDispatchToProps = {
+const mapDispatchToProps = {
 	displayNotificationDrawer,
 	hideNotificationDrawer,
 };
