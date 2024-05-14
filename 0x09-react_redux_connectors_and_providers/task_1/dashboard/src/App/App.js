@@ -1,20 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Notifications from "../Notifications/Notifications";
-import Header from "../Header/Header";
-import BodySection from "../BodySection/BodySection";
-import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
-import Login from "../Login/Login";
-import CourseList from "../CourseList/CourseList";
-import Footer from "../Footer/Footer";
-import PropTypes from "prop-types";
-import { getLatestNotification } from "../utils/utils";
-import { StyleSheet, css } from "aphrodite";
-import AppContext from "./AppContext";
-import {
-	displayNotificationDrawer,
-	hideNotificationDrawer,
-} from "../actions/uiActionCreators";
+import React from 'react';
+import { connect } from 'react-redux';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Login from '../Login/Login';
+import CourseList from '../CourseList/CourseList';
+import Notifications from '../Notifications/Notifications';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import PropTypes from 'prop-types';
+import { getLatestNotification } from '../utils/utils';
+import BodySection from '../BodySection/BodySection';
+import { StyleSheet, css } from 'aphrodite';
+import AppContext from './AppContext';
 
 const styles = StyleSheet.create({
 	App: {
@@ -27,27 +23,14 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		flexDirection: 'row-reverse',
 	},
-});
+})
 
 class App extends React.Component {
-	static defaultProps = {
-		isLoggedIn: false,
-		displayDrawer: false,
-		displayNotificationDrawer: () => { },
-		hideNotificationDrawer: () => { },
-	};
-
-	static propTypes = {
-		isLoggedIn: PropTypes.bool,
-		displayDrawer: PropTypes.bool,
-		displayNotificationDrawer: PropTypes.func,
-		hideNotificationDrawer: PropTypes.func,
-	};
-
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			displayDrawer: false,
 			user: {
 				email: '',
 				password: '',
@@ -61,6 +44,8 @@ class App extends React.Component {
 		};
 
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+		this.handleHideDrawer = this.handleHideDrawer.bind(this);
 		this.logIn = this.logIn.bind(this);
 		this.logOut = this.logOut.bind(this);
 		this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
@@ -99,6 +84,14 @@ class App extends React.Component {
 		}
 	}
 
+	handleDisplayDrawer() {
+		this.setState({ displayDrawer: true });
+	}
+
+	handleHideDrawer() {
+		this.setState({ displayDrawer: false });
+	}
+
 	markNotificationAsRead(id) {
 		this.setState(prevState => ({
 			listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
@@ -115,14 +108,7 @@ class App extends React.Component {
 
 	render() {
 		const { user, listNotifications } = this.state;
-
-		const {
-			isLoggedIn,
-			displayDrawer,
-			displayNotificationDrawer,
-			hideNotificationDrawer,
-		} = this.props;
-
+		const { displayDrawer } = this.props;
 		return (
 			<AppContext.Provider value={{ user, logOut: this.logOut }}>
 				<React.Fragment>
@@ -130,14 +116,14 @@ class App extends React.Component {
 						<div className={css(styles.headingSection)}>
 							<Notifications
 								displayDrawer={displayDrawer}
-								handleDisplayDrawer={displayNotificationDrawer}
-								handleHideDrawer={hideNotificationDrawer}
+								handleDisplayDrawer={this.handleDisplayDrawer}
+								handleHideDrawer={this.handleHideDrawer}
 								listNotifications={listNotifications}
 								markNotificationAsRead={this.markNotificationAsRead}
 							/>
 							<Header />
 						</div>
-						{isLoggedIn ? (
+						{user.isLoggedIn ? (
 							<BodySectionWithMarginBottom title='Course list'>
 								<CourseList listCourses={this.listCourses} />
 							</BodySectionWithMarginBottom>
@@ -162,19 +148,12 @@ class App extends React.Component {
 	}
 }
 
-// Define mapStateToProps to pass isLoggedIn and displayDrawer from Redux state to props
+// Define mapStateToProps and export the connected component
 export const mapStateToProps = (state) => {
 	return {
-		isLoggedIn: state.get('isUserLoggedIn'),
-		displayDrawer: state.get('isNotificationDrawerVisible')
+		isLoggedIn: state.get("isUserLoggedIn"),
+		displayDrawer: state.get("isNotificationDrawerVisible"),
 	};
 };
 
-// Define mapDispatchToProps to pass the action creators to props
-const mapDispatchToProps = {
-	displayNotificationDrawer,
-	hideNotificationDrawer,
-};
-
-// Connect mapStateToProps to the App component
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
