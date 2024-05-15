@@ -11,7 +11,7 @@ import { getLatestNotification } from '../utils/utils';
 import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
 import AppContext from './AppContext';
-import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators';
+import { displayNotificationDrawer, hideNotificationDrawer, loginRequest } from '../actions/uiActionCreators';
 
 const styles = StyleSheet.create({
 	App: {
@@ -105,7 +105,7 @@ class App extends React.Component {
 
 	render() {
 		const { user, listNotifications } = this.state;
-		const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
+		const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer, login } = this.props;
 		return (
 			<AppContext.Provider value={{ user, logOut: this.logOut }}>
 				<React.Fragment>
@@ -157,6 +157,7 @@ App.propTypes = {
 	displayDrawer: PropTypes.bool,
 	displayNotificationDrawer: PropTypes.func,
 	hideNotificationDrawer: PropTypes.func,
+	login: PropTypes.func,
 };
 
 // Define mapStateToProps and export the connected component
@@ -171,6 +172,7 @@ export const mapStateToProps = (state) => {
 const mapDispatchToProps = {
 	displayNotificationDrawer,
 	hideNotificationDrawer,
+	login: loginRequest,
 };
 
 
