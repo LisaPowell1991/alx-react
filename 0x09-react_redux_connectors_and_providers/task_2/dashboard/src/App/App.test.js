@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { jest } from '@jest/globals';
-import App from './App';
+import { App } from './App';
 import { StyleSheetTestUtils } from 'aphrodite';
 import { AppContext, user, logOut } from './AppContext';
 import { mapStateToProps } from './App';
@@ -16,7 +16,7 @@ describe('Test App.js', () => {
 	beforeEach(() => {
 		StyleSheetTestUtils.suppressStyleInjection();
 		const store = createStore(uiReducer);
-		wrapper = mount(<Provider store={store} ><App /></Provider>);
+		wrapper = shallow(<App />);
 	});
 
 	it('Renders App without crashing', () => {

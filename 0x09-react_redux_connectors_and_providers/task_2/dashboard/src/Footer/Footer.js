@@ -4,7 +4,7 @@ import "./Footer.css";
 import { getFullYear, getFooterCopy } from "../utils/utils";
 import { connect } from 'react-redux';
 
-function Footer({ user }) {
+export function Footer({ user }) {
 	return (
 		<>
 			<div className="App-footer">

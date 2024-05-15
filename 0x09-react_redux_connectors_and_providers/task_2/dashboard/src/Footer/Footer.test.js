@@ -1,12 +1,12 @@
 // Footer.test.js
 import React from 'react';
 import { shallow } from 'enzyme';
-import Footer from './Footer';
+import { Footer } from './Footer'; // import the unconnected Footer component
 import { getFullYear, getFooterCopy } from '../utils/utils';
 
 describe('Footer test', () => {
 	it('should render without crashing', () => {
-		const wrapper = shallow(<Footer />);
+		const wrapper = shallow(<Footer user={{ isLoggedIn: false }} />);
 		expect(wrapper.exists()).toEqual(true);
 	});
 
