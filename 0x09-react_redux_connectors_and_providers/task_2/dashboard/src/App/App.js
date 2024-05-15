@@ -11,7 +11,7 @@ import { getLatestNotification } from '../utils/utils';
 import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
 import AppContext from './AppContext';
-import { displayNotificationDrawer, hideNotificationDrawer, loginRequest } from '../actions/uiActionCreators';
+import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators';
 
 const styles = StyleSheet.create({
 	App: {
@@ -24,9 +24,77 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		flexDirection: 'row-reverse',
 	},
-});
+})
 
 class App extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			user: {
+				email: '',
+				password: '',
+				isLoggedIn: false
+			},
+			listNotifications: [
+				{ id: 1, type: 'default', value: 'New course available' },
+				{ id: 2, type: 'urgent', value: 'New resume available' },
+				{ id: 3, type: 'urgent', html: getLatestNotification() },
+			]
+		};
+
+		this.logIn = this.logIn.bind(this);
+		this.logOut = this.logOut.bind(this);
+		this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
+	}
+
+	logIn(email, password) {
+		this.setState({
+			user: {
+				email: email,
+				password: password,
+				isLoggedIn: true
+			}
+		});
+	}
+
+	logOut() {
+		this.setState({
+			user: {
+				email: '',
+				password: '',
+				isLoggedIn: false
+			}
+		});
+	}
+
+	listCourses = [
+		{ id: 1, name: 'ES6', credit: 60 },
+		{ id: 2, name: 'Webpack', credit: 20 },
+		{ id: 3, name: 'React', credit: 40 },
+	];
+
+	handleKeyPress(e) {
+		if (e.ctrlKey && e.key === 'h') {
+			alert('Logging you out');
+			this.logOut();
+		}
+	}
+
+	handleDisplayDrawer() {
+		this.setState({ displayDrawer: true });
+	}
+
+	handleHideDrawer() {
+		this.setState({ displayDrawer: false });
+	}
+
+	markNotificationAsRead(id) {
+		this.setState(prevState => ({
+			listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
+		}));
+	}
+
 	componentDidMount() {
 		document.addEventListener('keydown', this.handleKeyPress);
 	}
@@ -35,25 +103,9 @@ class App extends React.Component {
 		document.removeEventListener('keydown', this.handleKeyPress);
 	}
 
-	handleKeyPress = (e) => {
-		if (e.ctrlKey && e.key === 'h') {
-			alert('Logging you out');
-			this.logOut();
-		}
-	};
-
-	listCourses = [
-		{ id: 1, name: 'ES6', credit: 60 },
-		{ id: 2, name: 'Webpack', credit: 20 },
-		{ id: 3, name: 'React', credit: 40 },
-	];
-
-	markNotificationAsRead = (id) => {
-		// Dispatch an action to mark notification as read in Redux store
-	};
-
 	render() {
-		const { user, listNotifications, displayDrawer, displayNotificationDrawer, hideNotificationDrawer, login } = this.props;
+		const { user, listNotifications } = this.state;
+		const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
 		return (
 			<AppContext.Provider value={{ user, logOut: this.logOut }}>
 				<React.Fragment>
@@ -74,7 +126,7 @@ class App extends React.Component {
 							</BodySectionWithMarginBottom>
 						) : (
 							<BodySectionWithMarginBottom title='Log in to continue'>
-								<Login login={login} />
+								<Login logIn={this.logIn} />
 							</BodySectionWithMarginBottom>
 						)}
 						<BodySection title='News from the school'>
@@ -105,20 +157,21 @@ App.propTypes = {
 	displayDrawer: PropTypes.bool,
 	displayNotificationDrawer: PropTypes.func,
 	hideNotificationDrawer: PropTypes.func,
-	login: PropTypes.func.isRequired,
 };
 
 // Define mapStateToProps and export the connected component
-export const mapStateToProps = (state) => ({
-	isLoggedIn: state.get('isUserLoggedIn'),
-	displayDrawer: state.get('isNotificationDrawerVisible'),
-});
+export const mapStateToProps = (state) => {
+	return {
+		isLoggedIn: state.get("isUserLoggedIn"),
+		displayDrawer: state.get("isNotificationDrawerVisible"),
+	};
+};
 
 // Define mapDispatchToProps and export the connected component
 const mapDispatchToProps = {
 	displayNotificationDrawer,
 	hideNotificationDrawer,
-	login: loginRequest,
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
