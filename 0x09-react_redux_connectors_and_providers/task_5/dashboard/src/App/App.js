@@ -36,16 +36,10 @@ class App extends React.Component {
 				password: '',
 				isLoggedIn: false
 			},
-			listNotifications: [
-				{ id: 1, type: 'default', value: 'New course available' },
-				{ id: 2, type: 'urgent', value: 'New resume available' },
-				{ id: 3, type: 'urgent', html: getLatestNotification() },
-			]
 		};
 
 		this.logIn = this.logIn.bind(this);
 		this.logOut = this.logOut.bind(this);
-		this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
 	}
 
 	logIn(email, password) {
@@ -81,20 +75,6 @@ class App extends React.Component {
 		}
 	}
 
-	handleDisplayDrawer() {
-		this.setState({ displayDrawer: true });
-	}
-
-	handleHideDrawer() {
-		this.setState({ displayDrawer: false });
-	}
-
-	markNotificationAsRead(id) {
-		this.setState(prevState => ({
-			listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
-		}));
-	}
-
 	componentDidMount() {
 		document.addEventListener('keydown', this.handleKeyPress);
 	}
@@ -104,7 +84,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { user, listNotifications } = this.state;
+		const { user } = this.state;
 		const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer, login } = this.props;
 		return (
 			<AppContext.Provider value={{ user, logOut: this.logOut }}>
