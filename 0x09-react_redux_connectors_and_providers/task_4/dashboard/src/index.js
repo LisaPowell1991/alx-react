@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import { thunk } from "redux-thunk";
@@ -11,7 +11,11 @@ import { Map } from "immutable";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // Create the store with rootReducer and apply the middleware
-const store = createStore(rootReducer, Map(), composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(rootReducer, {
+	course: Map(),
+	notification: Map(),
+	ui: Map(),
+}, composeEnhancers(applyMiddleware(thunk)));
 
 const root = document.getElementById('root');
 
