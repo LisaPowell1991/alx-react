@@ -25,7 +25,11 @@ const styles = StyleSheet.create({
 	},
 });
 
-const CourseListRow = ({ isHeader, textFirstCell, textSecondCell }) => {
+const CourseListRow = ({
+	isHeader = false,
+	textFirstCell,
+	textSecondCell = null
+}) => {
 	const [isChecked, setIsChecked] = useState(false);
 
 	const handleCheckboxChange = () => {

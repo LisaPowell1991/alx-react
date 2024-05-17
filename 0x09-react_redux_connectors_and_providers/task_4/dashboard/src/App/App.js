@@ -163,8 +163,8 @@ App.propTypes = {
 // Define mapStateToProps and export the connected component
 export const mapStateToProps = (state) => {
 	return {
-		isLoggedIn: state.get("isUserLoggedIn"),
-		displayDrawer: state.get("isNotificationDrawerVisible"),
+		isLoggedIn: state.ui.get("isUserLoggedIn"),
+		displayDrawer: state.ui.get("isNotificationDrawerVisible"),
 	};
 };
 
